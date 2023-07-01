@@ -84,7 +84,7 @@
               <p class="ma-0">Order Total</p>
               <p class="text-primary">${{ cartStore.total }}</p>
             </div>
-            <v-btn color="primary" block> Checkout </v-btn>
+            <v-btn color="primary" @click="goToCheckout" block> Checkout </v-btn>
           </v-card-text>
         </v-card>
       </v-col>
@@ -95,6 +95,10 @@
 <script setup>
 import { useCartStore } from '../stores/cart.js';
 const cartStore = useCartStore();
+
+const goToCheckout = () => {
+    return navigateTo('/checkout')
+}
 </script>
 
 <style lang="scss" scoped></style>

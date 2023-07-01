@@ -1,4 +1,3 @@
-
 export default defineNuxtConfig({
     css: ['vuetify/styles', '@mdi/font/css/materialdesignicons.min.css', '@fortawesome/fontawesome-free/css/all.css'],
     build: {
@@ -6,5 +5,12 @@ export default defineNuxtConfig({
     },
     modules:[
         '@pinia/nuxt'
-    ]
+    ],
+    app: {
+        head: {
+          script: [
+            { src: 'https://js.stripe.com/v3/', defer: true }
+          ],
+        }
+      }
 })

@@ -9,12 +9,20 @@
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^6.2.1",
-    "nuxt": "3.0.0"
+    "nuxt": "3.0.0",
+    "@nuxt/types": "^2.17.0"
   },
   "dependencies": {
     "@mdi/font": "^7.0.96",
     "@pinia/nuxt": "^0.4.6",
+    "@stripe/stripe-js": "^1.54.1",
+    "axios": "^1.4.0",
+    "express": "^4.18.2",
+    "nuxt3": "^3.6.2-28134997.87e01ccf",
+    "pinia": "^2.1.4",
     "sass": "^1.56.1",
+    "stripe": "^12.11.0",
+    "uuid": "^9.0.0",
     "vuetify": "^3.0.2"
   }
 }
