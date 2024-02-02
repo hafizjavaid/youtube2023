@@ -12,6 +12,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useAuthStore } from '@/stores/authStore';
+
 type PAYLOAD = {
   password: string;
   username: string;
@@ -21,8 +23,11 @@ const form = ref<PAYLOAD>({
   username: 'hafiz',
 });
 const router = useRouter();
+const store = useAuthStore();
+
 const onSubmit = async () => {
   try {
+    await store.loginUser(form.value);
     router.push('/');
   } catch (error) {
     console.log(error);

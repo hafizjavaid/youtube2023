@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useAuthStore } from '@/stores/authStore'
 type PAYLOAD = {
   email: string;
   password: string;
@@ -33,8 +34,11 @@ const form = ref<PAYLOAD>({
   role: 'ADMIN',
 });
 const router = useRouter();
+const store = useAuthStore();
 const onSubmit = async () => {
   try {
+
+    await store.registerUser(form.value)
     router.push('/');
   } catch (error) {
     console.log(error);
@@ -61,12 +65,7 @@ const onSubmit = async () => {
             </div>
             <div class="grid gap-2">
               <Label for="username">Username</Label>
-              <Input
-                id="username"
-                type="text"
-                placeholder="username"
-                v-model="form.username"
-              />
+              <Input id="username" type="text" placeholder="username" v-model="form.username" />
             </div>
             <div class="grid gap-2">
               <Label for="password">Password</Label>
@@ -88,13 +87,10 @@ const onSubmit = async () => {
             </div>
           </CardContent>
           <CardFooter class="flex-col space-y-2">
-            <Button class="w-full" type="submit"> Login </Button>
+            <Button class="w-full" type="submit"> Register </Button>
             <p>
               Already have an account?
-              <RouterLink
-                to="/auth/login"
-                class="border-b border-gray-500 text-muted-foreground hover:text-primary"
-              >
+              <RouterLink to="/auth/login" class="border-b border-gray-500 text-muted-foreground hover:text-primary">
                 Login
               </RouterLink>
             </p>
