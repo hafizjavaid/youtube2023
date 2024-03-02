@@ -49,5 +49,32 @@ export type Categories = PaginationContent & {
 
     totalCategories: number,
     categories: Category[],
-    
+
+}
+export type Product = {
+    __v: number,
+    _id: string,
+    category: string,
+    createdAt: string,
+    description: string,
+    mainImage: Image,
+    name: string,
+    owner: string,
+    price: number,
+    stock: number,
+    subImages: Image[],
+    updatedAt: string
+}
+export type Products = PaginationContent & {
+
+    totalProducts: number,
+    products: Product[],
+
+}
+
+export type Error = {
+    errors?: Record<string, string[]>;
+    statusCode: number;
+    message: string,
+    success: boolean,
 }

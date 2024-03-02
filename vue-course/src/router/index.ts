@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import Login from '../views/Auth/Login.vue'
 import Register from '../views/Auth/Register.vue'
 import Category from '../views/Category.vue'
+import SingleProduct from '../views/products/[id].vue'
+import { isUserLoggedIn } from '@/lib/utils'
 
 
 
@@ -13,12 +15,26 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      meta: {
+        auth: true
+      }
+    },
+    {
+      path: '/products/:id',
+      name: 'single-product',
+      component: SingleProduct,
+      meta: {
+        auth: true
+      }
     },
     {
       path: '/category',
       name: 'category',
-      component: Category
+      component: Category,
+      meta: {
+        auth: true
+      }
     },
     {
       path: '/auth/login',
@@ -33,5 +49,26 @@ const router = createRouter({
 
   ]
 })
+router.beforeEach(async (to, from, next) => {
 
+  const isLoggedIn = await isUserLoggedIn();
+  // const isLoggedIn = true;
+
+  if (to.name !== 'auth-login' && !isLoggedIn) {
+    if (!to.meta.auth) {
+      return next();
+    }
+    return next({ name: 'auth-login' });
+
+
+  }
+  else if (to.name === 'auth-login' && isLoggedIn) {
+    return next({ name: 'home' });
+  }
+  else {
+    next();
+  }
+
+
+})
 export default router

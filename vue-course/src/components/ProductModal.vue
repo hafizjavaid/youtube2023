@@ -1,7 +1,7 @@
 <template>
   <Modal :isOpen="isOpen" @on-close="onClose">
     <div class="overflow-y-auto h-[500px] max-h-[600px]">
-      <form action="" class="grid gap-y-4">
+      <form @submit.prevent="onSubmit" action="" class="grid gap-y-4">
         <div class="grid gap-2">
           <Label for="name">Name</Label>
           <Input id="name" type="text" placeholder="name" v-model="form.name" />
@@ -73,6 +73,7 @@
             </SelectContent>
           </Select>
         </div>
+        <Button class="w-full" type="submit"> Create Product </Button>
       </form>
     </div>
   </Modal>
@@ -95,6 +96,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+
 import { Label } from '@/components/ui/label';
 import { useGlobalLoader } from 'vue-global-loader';
 const { displayLoader, destroyLoader } = useGlobalLoader();
@@ -119,6 +122,8 @@ const form = ref<PAYLOAD>({
 });
 import { useCategoryStore } from '@/stores/categoryStore';
 const categoryStore = useCategoryStore();
+import { useProductStore } from '@/stores/productStore';
+const productStore = useProductStore();
 const categories = computed(() => categoryStore.categoriesData.categories);
 const mainImagePreview = ref<string[]>([]);
 const subImagesPreviews = ref<string[]>([]);
@@ -168,6 +173,17 @@ const onSubImageChange = (files: FileList | null) => {
         subImagesPreviews.value.push(url.value);
       }
     });
+  }
+};
+const onSubmit = async () => {
+  try {
+    displayLoader();
+    await productStore.createProduct(form.value);
+    onClose();
+  } catch (error) {
+    console.log(error);
+  } finally {
+    destroyLoader();
   }
 };
 </script>
